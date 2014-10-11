@@ -8,7 +8,7 @@ substack
 
 ```
 $ npm install -g tslide
-tslide readme.markdown
+$ tslide readme.markdown
 ```
 
 jsdc taipei 2014
