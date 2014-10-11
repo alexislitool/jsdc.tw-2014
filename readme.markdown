@@ -447,6 +447,12 @@ npm install dictdb
 
 # accountdown
 
+modular user accounts!
+
+---
+
+# accountdown
+
 ```
 
 var db = require('level')('./users.db')
@@ -469,12 +475,42 @@ var users = accountdown(db, {
 
 # accountdown
 
-```
+``` js
 var accountdown = require('accountdown')
 var db = require('level')('./users.db')
 
 var users = accountdown(db, {
-    login: { basic: require('accountdown-basic') }
+    login: { basic: require('accountdown-basic') },
+    // ...
+});
+```
+
+---
+
+# accountdown
+
+``` js
+var accountdown = require('accountdown')
+var db = require('level')('./users.db')
+
+var users = accountdown(db, {
+    login: { basic: require('accountdown-basic') },
+    rfid: { basic: require('accountdown-rfid') },
+    gpg: { basic: require('accountdown-gpg') }
+    // ...or whatever!
+});
+```
+
+---
+
+# accountdown
+
+``` js
+// ...
+
+users.create('substack', {
+    login: { basic: { username: 'substack', password: 'beepboop' } },
+    value: { bio: 'oh hello' }
 });
 ```
 
@@ -483,6 +519,9 @@ var users = accountdown(db, {
 # accountdown
 
 ```
+// ...
+
+users.list().on('data', console.log)
 ```
 
 ---
@@ -490,18 +529,145 @@ var users = accountdown(db, {
 # accountdown
 
 ```
-```
+// ...
 
----
-
-# accountdown
-
-```
+users.verify('basic', creds, function (err, ok, id) {
+    if (err) console.error(err);
+    console.log('ok=', ok);
+    console.log('id=', id);
+})
 ```
 
 ---
 
 # level-party
+
+open a leveldb directory from multiple processes
+
+---
+
+# accountdown-command
+
+manage accountdown accounts on the command-line
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+
+if (process.argv[2] === 'server') {
+    var http = require('http');
+    var through = require('through2');
+    http.createServer(function (req, res) {
+        users.list().pipe(through.obj(function (row, enc, next) {
+            this.push(row.key + '\n');
+            next();
+        })).pipe(res);
+    }).listen(5000);
+}
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+
+if (process.argv[2] === 'server') {
+    require('./handle.js')(users).listen(5000);
+}
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+
+if (process.argv[2] === 'users') {
+    // ...
+}
+else if (process.argv[2] === 'server') {
+    require('./handle.js')(users).listen(5000);
+}
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+
+var users = accountdown(db, {
+    login: { basic: require('accountdown-basic') }
+});
+
+if (process.argv[2] === 'users') {
+    command(users, process.argv.slice(3), function (err) {
+        // ...
+        
+    }).pipe(process.stdout);
+}
+else if (process.argv[2] === 'server') {
+    require('./handle.js')(users).listen(5000);
+}
+```
+
+---
+
+# accountdown-command
+
+``` js
+var accountdown = require('accountdown');
+var db = require('level-party')('./accounts.db');
+var command = require('accountdown-command');
+
+var users = accountdown(db, {
+    login: { basic: require('accountdown-basic') }
+});
+
+if (process.argv[2] === 'users') {
+    command(users, process.argv.slice(3), function (err) {
+        if (err) console.error(err);
+        db.close();
+    }).pipe(process.stdout);
+}
+else if (process.argv[2] === 'server') {
+    require('./handle.js')(users).listen(5000);
+}
+```
 
 ---
 
@@ -593,6 +759,13 @@ C
 # replication is easy!
 
 when you use content-addressable storage
+
+---
+
+# hash-exchange
+
+exchange cryptographic hashes of content
+for multi-master replication
 
 ---
 
@@ -744,5 +917,31 @@ inherits(WikiDB, ForkDB);
 # learn more
 
 * levelmeup on http://nodeschool.io
+* [
+    'level', 'dictdb','accountdown','forkdb','wikidb','treedb',
+    'content-addressable-blob-store','hash-exchange','shasum',
+  ].forEach(function (x) {
+    console.log('https://npmjs.org/package/' + x)
+  })
 * coming soon: wikidb-powered code cookbook
 
+---
+
+# thanks
+
+```
+$ node get.js --from en --to zh thank you
+谢谢你
+```
+
+---
+
+# thanks
+
+```
+$ node get.js --from en --to zh thank you
+谢谢你
+$ node get.js --from en --to zh goodbye
+再会
+再见
+```
