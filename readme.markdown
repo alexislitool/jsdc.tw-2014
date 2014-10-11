@@ -6,6 +6,13 @@ substack
   https://{github,twitter}.com/substack
   https://npmjs.org/~substack
 
+```
+$ npm install -g tslide
+tslide readme.markdown
+```
+
+jsdc taipei 2014
+
 ---
 
 # micro database (小资料库)
