@@ -1,4 +1,16 @@
-# micro databases
+# micro database (小资料库)
+
+substack
+  
+  http://substack.net
+  https://{github,twitter}.com/substack
+  https://npmjs.org/~substack
+
+---
+
+# micro database (小资料库)
+
+原谅坏的翻译!
 
 ---
 
@@ -6,15 +18,60 @@
 
 tiny embedded database
 
----
-
-# bytewise
-
-lexicographic ordering
+内含的小资料库
 
 ---
 
-# bytewise
+# leveldb
+
+鍵值儲存
+
+---
+
+# leveldb
+
+* db.get() - 取
+* db.put() - 插入物
+* db.del() - 删除
+* db.batch() - 原子
+
+---
+
+# unix philosophy
+
+unix学说:
+
+```
+'Make each program do one thing well.'
+```
+
+# unix philosophy
+
+unix学说:
+
+```
+'Make each program do one thing well.'
++ 'To do a new job, build afresh rather than complicate'
++ 'old programs by adding new features.'
+```
+
+# unix philosophy
+
+* modularity (模組) write simple parts connected by clean interfaces
+* composition (作文) design programs to be connected with other programs
+* parsimony (吝啬) write a big program only as a last resort
+
+---
+
+# lexicographic ordering
+
+字典序
+
+---
+
+# lexicographic ordering
+
+字典序:
 
 ```
 aaa
@@ -24,7 +81,9 @@ ccc
 
 ---
 
-# bytewise
+# lexicographic ordering
+
+字典序:
 
 ```
 1
@@ -40,7 +99,7 @@ ccc
 
 # bytewise
 
-with bytewise:
+字典序 with bytewise:
 
 ```
 1
@@ -56,7 +115,7 @@ with bytewise:
 
 # bytewise
 
-also with bytewise:
+字典序 with bytewise:
 
 ```
 null
@@ -65,6 +124,54 @@ String
 Array (componentwise)
 Object (componentwise string-keyed key/value pairs)
 undefined
+```
+
+---
+
+# bytewise
+
+字典序 with bytewise:
+
+```
+['user','dominictarr']
+['user','mafintosh']
+['user','substack']
+```
+
+---
+
+# bytewise
+
+字典序 with bytewise:
+
+```
+['user','dominictarr']
+['user','mafintosh']
+['user','substack']
+['post',1412991992967,'substack']
+['post',1412992015628,'dominictarr']
+['post',1412992057388,'substack']
+['post',1412992068543,'mafintosh']
+```
+
+---
+
+# bytewise
+
+字典序 with bytewise:
+
+```
+['user','dominictarr']
+['user','mafintosh']
+['user','substack']
+['post',1412991992967,'substack']
+['post',1412992015628,'dominictarr']
+['post',1412992057388,'substack']
+['post',1412992068543,'mafintosh']
+['post-user','dominictarr',1412992015628]
+['post-user','mafintosh',1412992068543]
+['post-user','substack',1412991992967]
+['post-user','substack',1412992057388]
 ```
 
 ---
@@ -83,11 +190,13 @@ and nested encodings!
 
 ---
 
-# translation database
+# translation database 翻译资料库
 
 parse-dictd
 
 ---
+
+# translation 翻译资料库
 
 # translation (import)
 
@@ -130,7 +239,6 @@ ddb.get(q, function (err, results) {
 # accountdown
 
 ```
-content-addressable
 ```
 
 ---
