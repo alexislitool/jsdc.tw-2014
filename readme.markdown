@@ -550,7 +550,126 @@ when you use content-addressable storage
 
 # hash-exchange
 
+``` js
+var shasum = require('shasum');
+
+var messages = process.argv.slice(2);
+var data = {};
+messages.forEach(function (msg) { data[shasum(msg)] = msg });
 ```
+
+---
+
+# hash-exchange
+
+``` js
+// ...
+
+var exchange = require('hash-exchange');
+
+var ex = exchange(function (hash) {
+    // ...
+});
+```
+
+---
+
+# hash-exchange
+
+``` js
+// ...
+var through = require('through2');
+var exchange = require('hash-exchange');
+
+var ex = exchange(function (hash) {
+    var r = through();
+    r.end(data[hash]);
+    return r;
+});
+```
+
+---
+
+# hash-exchange
+
+``` js
+// ...
+
+ex.provide(Object.keys(data));
+```
+
+---
+
+# hash-exchange
+
+``` js
+// ...
+
+ex.on('available', function (hashes) {
+    ex.request(hashes);
+});
+```
+
+---
+
+# hash-exchange
+
+```
+var concat = require('concat-stream');
+// ...
+
+ex.on('response', function (hash, stream) {
+    stream.pipe(concat(function (body) {
+        console.error('# BEGIN ' + hash);
+        console.error(body.toString('utf8'));
+        console.error('# END ' + hash);
+    }));
+});
+```
+
+---
+
+# hash-exchange
+
+```
+// ...
+
+process.stdin.pipe(ex).pipe(process.stdout);
+```
+
+---
+
+# hash-exchange
+
+``` js
+var exchange = require('hash-exchange');
+var through = require('through2');
+var concat = require('concat-stream');
+var shasum = require('shasum');
+
+var messages = process.argv.slice(2);
+var data = {};
+messages.forEach(function (msg) { data[shasum(msg)] = msg });
+
+var ex = exchange(function (hash) {
+    var r = through();
+    r.end(data[hash]);
+    return r;
+});
+ex.provide(Object.keys(data));
+
+ex.on('available', function (hashes) {
+    ex.request(hashes);
+});
+
+ex.on('response', function (hash, stream) {
+    stream.pipe(concat(function (body) {
+        console.error('# BEGIN ' + hash);
+        console.error(body.toString('utf8'));
+        console.error('# END ' + hash);
+    }));
+});
+process.stdin.pipe(ex).pipe(process.stdout);
 ```
 
 ---
@@ -558,6 +677,11 @@ when you use content-addressable storage
 # wikidb
 
 like forkdb, but for wikis!
+
+```
+var inherits = require('inherits');
+inherits(WikiDB, ForkDB);
+```
 
 ---
 
@@ -571,19 +695,12 @@ like forkdb, but for wikis!
 # more micro databases
 
 * maildb - database for imap and smtp, used by eelmail
-* batchdb
-
----
-
-# more micro databases
-
-* maildb - database for imap and smtp, used by eelmail
-* batchdb - batch queues
+* batchdb - job queue
 
 ---
 
 # learn more
 
 * levelmeup on http://nodeschool.io
-* 
+* coming soon: wikidb-powered code cookbook
 
