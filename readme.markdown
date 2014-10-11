@@ -14,6 +14,36 @@ substack
 
 ---
 
+# unix philosophy
+
+unix学说:
+
+```
+'Make each program do one thing well.'
+```
+
+---
+
+# unix philosophy
+
+unix学说:
+
+```
+'Make each program do one thing well.'
++ 'To do a new job, build afresh rather than complicate'
++ 'old programs by adding new features.'
+```
+
+---
+
+# unix philosophy
+
+* modularity (模組) write simple parts connected by clean interfaces
+* composition (作文) design programs to be connected with other programs
+* parsimony (吝啬) write a big program only as a last resort
+
+---
+
 # leveldb
 
 tiny embedded database
@@ -37,29 +67,23 @@ tiny embedded database
 
 ---
 
-# unix philosophy
+# leveldb
 
-unix学说:
+* db.get() - 取
+* db.put() - 插入物
+* db.del() - 删除
+* db.batch() - 原子
+* db.createReadStream()
 
-```
-'Make each program do one thing well.'
-```
+---
 
-# unix philosophy
+# leveldb
 
-unix学说:
-
-```
-'Make each program do one thing well.'
-+ 'To do a new job, build afresh rather than complicate'
-+ 'old programs by adding new features.'
-```
-
-# unix philosophy
-
-* modularity (模組) write simple parts connected by clean interfaces
-* composition (作文) design programs to be connected with other programs
-* parsimony (吝啬) write a big program only as a last resort
+* db.get() - 取
+* db.put() - 插入物
+* db.del() - 删除
+* db.batch() - 原子
+* db.createReadStream({ gt: ..., lt: ... })
 
 ---
 
