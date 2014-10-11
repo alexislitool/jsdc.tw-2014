@@ -21,6 +21,14 @@ jsdc taipei 2014
 
 ---
 
+# micro database (小资料库)
+
+原谅坏的翻译!
+
+(also I only have a simplified dictd dataset)
+
+---
+
 # unix philosophy
 
 unix学说:
