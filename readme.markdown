@@ -437,11 +437,9 @@ ddb.get(q).on('data', console.log);
 
 ---
 
-# translation (query)
+# translation demo!
 
-```
-npm install dictdb
-```
+演示!
 
 ---
 
@@ -671,6 +669,12 @@ else if (process.argv[2] === 'server') {
 
 ---
 
+# accountdown-command demo!
+
+演示!
+
+---
+
 # content-addressable-blob-store
 
 俳句:
@@ -692,99 +696,9 @@ Addressable blob.
 
 ---
 
-# forkdb
+# content-addressable-blob-store demo!
 
-forkdable, offline-first data store
-
----
-
-# forkdb
-
-forkdable, offline-first data store
-with multi-master replication
-
----
-
-# forkdb
-
-forkdable, offline-first data store
-with multi-master replication
-using leveldb
-
----
-
-# forkdb
-
-```
-A
-↓
-B
-↓
-C
-```
-
----
-
-# forkdb
-
-```
-
-
-
-
-
-
-
-
-C  775dc2e743389c014d360a6da7f432b52a478dd6
-   {}
-```
-
----
-
-# forkdb
-
-```
-
-
-
-
-B  b921c05a26a02ebbad1d7ef41a53f88d7f623a4e
-   {"prev":"775dc2e743389c014d360a6da7f432b52a478dd6"}
-↓
-
-C  775dc2e743389c014d360a6da7f432b52a478dd6
-   {}
-```
-
----
-
-# forkdb
-
-```
-A  d01f38b4e1f3502375192279503f8c9c9842a50d
-   {"prev":"b921c05a26a02ebbad1d7ef41a53f88d7f623a4e"}
-↓
-
-B  b921c05a26a02ebbad1d7ef41a53f88d7f623a4e
-   {"prev":"775dc2e743389c014d360a6da7f432b52a478dd6"}
-↓
-
-C  775dc2e743389c014d360a6da7f432b52a478dd6
-   {}
-```
-
----
-
-# forkdb
-
-```
-A  X
-↓  ⎥
-B  ↲
-↓
-C
-```
+演示!
 
 ---
 
@@ -892,38 +806,111 @@ process.stdin.pipe(ex).pipe(process.stdout);
 
 ---
 
-# hash-exchange
+# hash-exchange demo!
 
-``` js
-var exchange = require('hash-exchange');
-var through = require('through2');
-var concat = require('concat-stream');
-var shasum = require('shasum');
+演示!
 
-var messages = process.argv.slice(2);
-var data = {};
-messages.forEach(function (msg) { data[shasum(msg)] = msg });
+---
 
-var ex = exchange(function (hash) {
-    var r = through();
-    r.end(data[hash]);
-    return r;
-});
-ex.provide(Object.keys(data));
+# forkdb
 
-ex.on('available', function (hashes) {
-    ex.request(hashes);
-});
+forkdable, offline-first data store
 
-ex.on('response', function (hash, stream) {
-    stream.pipe(concat(function (body) {
-        console.error('# BEGIN ' + hash);
-        console.error(body.toString('utf8'));
-        console.error('# END ' + hash);
-    }));
-});
-process.stdin.pipe(ex).pipe(process.stdout);
+---
+
+# forkdb
+
+forkdable, offline-first data store
+with multi-master replication
+
+---
+
+# forkdb
+
+forkdable, offline-first data store
+with multi-master replication
+using leveldb
+
+---
+
+# forkdb
+
 ```
+A
+↓
+B
+↓
+C
+```
+
+---
+
+# forkdb
+
+```
+
+
+
+
+
+
+
+
+C  775dc2e743389c014d360a6da7f432b52a478dd6
+   {}
+```
+
+---
+
+# forkdb
+
+```
+
+
+
+
+B  b921c05a26a02ebbad1d7ef41a53f88d7f623a4e
+   {"prev":"775dc2e743389c014d360a6da7f432b52a478dd6"}
+↓
+
+C  775dc2e743389c014d360a6da7f432b52a478dd6
+   {}
+```
+
+---
+
+# forkdb
+
+```
+A  d01f38b4e1f3502375192279503f8c9c9842a50d
+   {"prev":"b921c05a26a02ebbad1d7ef41a53f88d7f623a4e"}
+↓
+
+B  b921c05a26a02ebbad1d7ef41a53f88d7f623a4e
+   {"prev":"775dc2e743389c014d360a6da7f432b52a478dd6"}
+↓
+
+C  775dc2e743389c014d360a6da7f432b52a478dd6
+   {}
+```
+
+---
+
+# forkdb
+
+```
+A  X
+↓  ⎥
+B  ↲
+↓
+C
+```
+
+---
+
+# forkdb demo!
+
+演示!
 
 ---
 
@@ -935,6 +922,10 @@ wiki database on top of forkdb!
 var inherits = require('inherits');
 inherits(WikiDB, ForkDB);
 ```
+
+# wikidb demo!
+
+演示!
 
 ---
 
