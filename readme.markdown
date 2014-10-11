@@ -220,7 +220,162 @@ parse-dictd
 
 ---
 
+# translation 翻译资料库 (constructor)
+
+``` js
+
+
+
+module.exports = Translate;
+
+function Translate (db) {
+    if (!(this instanceof Translate)) return new Translate(db);
+}
+```
+
+---
+
+# translation 翻译资料库 (constructor)
+
+``` js
+var sublevel = require('level-sublevel/bytewise');
+var bytewise = require('bytewise');
+
+module.exports = Translate;
+
+function Translate (db) {
+    if (!(this instanceof Translate)) return new Translate(db);
+    this.db = sublevel(db, {
+        keyEncoding: bytewise,
+        valueEncoding: 'json'
+    });
+}
+```
+
+---
+
+# translation 翻译资料库 (link)
+
+``` js
+Translate.prototype.link = function (a, b, cb) {
+    var rows = [
+        // ...
+    ];
+    this.db.batch(rows, cb);
+};
+```
+
+---
+
+# translation 翻译资料库 (link)
+
+``` js
+Translate.prototype.link = function (a, b, cb) {
+    var rows = [
+        { key: [ 'link', a.lang, a.word, b.lang, b.word ], value: 0 }
+        
+    ];
+    this.db.batch(rows, cb);
+};
+```
+
+---
+
+# translation 翻译资料库 (link)
+
+``` js
+Translate.prototype.link = function (a, b, cb) {
+    var rows = [
+        { key: [ 'link', a.lang, a.word, b.lang, b.word ], value: 0 },
+        { key: [ 'link', b.lang, b.word, a.lang, a.word ], value: 0 }
+    ];
+    this.db.batch(rows, cb);
+};
+```
+
+---
+
 # translation 翻译资料库
+
+``` js
+Translate.prototype.get = function (opts) {
+    var s = this.db.createReadStream({
+        gt: [ 'link', opts.from, opts.word, opts.to, null ],
+        lt: [ 'link', opts.from, opts.word, opts.to, undefined ]
+    });
+    var r = through.obj(function (row, enc, next) {
+        this.push({ lang: row.key[3], word: row.key[4] });
+        next();
+    });
+    s.on('error', r.emit.bind(r, 'error'));
+    return s.pipe(r);
+};
+```
+---
+
+# translation (import)
+
+``` js
+
+
+var fs = require('fs');
+
+
+
+var dstream = fs.createReadStream(process.argv[2]);
+var istream = fs.createReadStream(process.argv[3]);
+```
+
+---
+
+# translation (import)
+
+``` js
+
+
+var fs = require('fs');
+var gunzip = require('zlib').createGunzip;
+
+var dstream = fs.createReadStream(process.argv[2]).pipe(gunzip());
+var istream = fs.createReadStream(process.argv[3]);
+```
+
+---
+
+# translation (import)
+
+``` js
+var parse = require('parse-dictd');
+var through = require('through2');
+var fs = require('fs');
+var gunzip = require('zlib').createGunzip;
+
+var dstream = fs.createReadStream(process.argv[2]).pipe(gunzip());
+var istream = fs.createReadStream(process.argv[3]);
+
+parse(dstream, istream).pipe(through.obj(function (row, enc, next) {
+    // ...
+}));
+```
+
+---
+
+# translation (import)
+
+``` js
+var minimist = require('minimist');
+var argv = minimist(process.argv.slice(2));
+
+// ...
+
+parse(dstream, istream).pipe(through.obj(function (row, enc, next) {
+    var a = { word: row.from, lang: argv.from };
+    var b = { word: row.to[0], lang: argv.to };
+    ddb.link(a, b, next);
+}));
+```
+
+---
 
 # translation (import)
 
@@ -248,21 +403,52 @@ parse(dstream, istream).pipe(through.obj(function (row, enc, next) {
 
 # translation (query)
 
-```
-var minimist = require('minimist');
+``` js
 var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var argv = require('minimist')(process.argv.slice(2));
 
-var argv = minimist(process.argv.slice(2));
-var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
-ddb.get(q, function (err, results) {
-    if (err) return console.error(err);
-    results.forEach(function (r) { console.log(r.word) });
-});
+
+
 ```
+
+---
+
+# translation (query)
+
+``` js
+var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var argv = require('minimist')(process.argv.slice(2));
+
+var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
+
+```
+
+---
+
+# translation (query)
+
+``` js
+var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var argv = require('minimist')(process.argv.slice(2));
+
+var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
+ddb.get(q).on('data', console.log);
+```
+
+---
+
+# translation (query)
+
+```
+npm install dictdb
+```
+
+---
 
 # accountdown
 
 ```
+
 ```
 
 ---
@@ -358,34 +544,46 @@ C
 
 # replication is easy!
 
-content-addressable storage
+when you use content-addressable storage
 
 ---
 
-# replication is easy!
+# hash-exchange
 
-content-addressable storage
+```
+```
 
 ---
 
 # wikidb
 
----
-
-# maildb
+like forkdb, but for wikis!
 
 ---
 
-# eelmail
+# more micro databases
+
+* maildb
+* batchdb
 
 ---
 
-# batchdb
+# more micro databases
+
+* maildb - database for imap and smtp, used by eelmail
+* batchdb
 
 ---
 
-# email server into batchdb
+# more micro databases
+
+* maildb - database for imap and smtp, used by eelmail
+* batchdb - batch queues
 
 ---
 
-# CYBERWIZARD INSTITUTE
+# learn more
+
+* levelmeup on http://nodeschool.io
+* 
+
