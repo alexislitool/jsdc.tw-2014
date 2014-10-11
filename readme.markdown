@@ -962,6 +962,8 @@ var inherits = require('inherits');
 inherits(WikiDB, ForkDB);
 ```
 
+---
+
 # wikidb demo!
 
 演示!
