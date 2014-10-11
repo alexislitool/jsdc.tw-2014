@@ -87,6 +87,12 @@ tiny embedded database
 
 ---
 
+# leveldb demo!
+
+演示!
+
+---
+
 # lexicographic ordering
 
 字典序
@@ -200,6 +206,12 @@ undefined
 
 ---
 
+# bytewise demo!
+
+演示!
+
+---
+
 # sublevel
 
 a database inside a database!
@@ -214,9 +226,21 @@ and nested encodings!
 
 ---
 
+# sublevel demo!
+
+演示!
+
+---
+
 # translation database 翻译资料库
 
 parse-dictd
+
+---
+
+# parse-dictd demo!
+
+演示!
 
 ---
 
