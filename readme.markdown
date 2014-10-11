@@ -673,11 +673,43 @@ else if (process.argv[2] === 'server') {
 
 # content-addressable-blob-store
 
+俳句:
+
+```
+Key of document
+is the hash of its content.
+Addressable blob.
+```
+
+---
+
+# content-addressable-blob-store
+
+```
+解答公文杂乱信号
+可设定位址的一滴
+```
+
 ---
 
 # forkdb
 
-content-addressable storage using leveldb
+forkdable, offline-first data store
+
+---
+
+# forkdb
+
+forkdable, offline-first data store
+with multi-master replication
+
+---
+
+# forkdb
+
+forkdable, offline-first data store
+with multi-master replication
+using leveldb
 
 ---
 
@@ -758,7 +790,7 @@ C
 
 # replication is easy!
 
-when you use content-addressable storage
+when you use content-addressable data!
 
 ---
 
@@ -897,7 +929,7 @@ process.stdin.pipe(ex).pipe(process.stdout);
 
 # wikidb
 
-like forkdb, but for wikis!
+wiki database on top of forkdb!
 
 ```
 var inherits = require('inherits');
