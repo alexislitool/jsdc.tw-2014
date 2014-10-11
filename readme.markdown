@@ -386,7 +386,7 @@ var fs = require('fs');
 var gunzip = require('zlib').createGunzip;
 var minimist = require('minimist');
 
-var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var ddb = require('dictdb')(require('level')('./dict.db'));
 
 var argv = minimist(process.argv.slice(2));
 var dstream = fs.createReadStream(argv._[0]).pipe(gunzip());
@@ -404,7 +404,7 @@ parse(dstream, istream).pipe(through.obj(function (row, enc, next) {
 # translation (query)
 
 ``` js
-var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var ddb = require('dictdb')(require('level')('./dict.db'));
 var argv = require('minimist')(process.argv.slice(2));
 
 
@@ -416,7 +416,7 @@ var argv = require('minimist')(process.argv.slice(2));
 # translation (query)
 
 ``` js
-var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var ddb = require('dictdb')(require('level')('./dict.db'));
 var argv = require('minimist')(process.argv.slice(2));
 
 var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
@@ -428,7 +428,7 @@ var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
 # translation (query)
 
 ``` js
-var ddb = require('dictdb')(require('level')('/tmp/dict.db'));
+var ddb = require('dictdb')(require('level')('./dict.db'));
 var argv = require('minimist')(process.argv.slice(2));
 
 var q = { word: argv._.join(' '), from: argv.from, to: argv.to };
@@ -449,6 +449,54 @@ npm install dictdb
 
 ```
 
+var db = require('level')('./users.db')
+```
+
+---
+
+# accountdown
+
+```
+var accountdown = require('accountdown')
+var db = require('level')('./users.db')
+
+var users = accountdown(db, {
+    // ...
+});
+```
+
+---
+
+# accountdown
+
+```
+var accountdown = require('accountdown')
+var db = require('level')('./users.db')
+
+var users = accountdown(db, {
+    login: { basic: require('accountdown-basic') }
+});
+```
+
+---
+
+# accountdown
+
+```
+```
+
+---
+
+# accountdown
+
+```
+```
+
+---
+
+# accountdown
+
+```
 ```
 
 ---
@@ -614,7 +662,7 @@ ex.on('available', function (hashes) {
 
 # hash-exchange
 
-```
+``` js
 var concat = require('concat-stream');
 // ...
 
@@ -631,7 +679,7 @@ ex.on('response', function (hash, stream) {
 
 # hash-exchange
 
-```
+``` js
 // ...
 
 process.stdin.pipe(ex).pipe(process.stdout);
@@ -685,17 +733,11 @@ inherits(WikiDB, ForkDB);
 
 ---
 
-# more micro databases
-
-* maildb
-* batchdb
-
----
-
-# more micro databases
+# more micro databases built on leveldb
 
 * maildb - database for imap and smtp, used by eelmail
-* batchdb - job queue
+* batchdb - job queue database
+* treedb - database for trees
 
 ---
 
